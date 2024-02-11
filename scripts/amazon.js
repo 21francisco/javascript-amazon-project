@@ -1,4 +1,5 @@
 
+import { cart } from '../data/cart.js';
 
   let productsHTML='';
 
@@ -88,9 +89,6 @@
       
       document.querySelector('.js-cart-quantity').
       innerHTML = cartQuantity;
-
-      console.log(cart.quantity);
-        console.log(cart);
       });
     });
   
