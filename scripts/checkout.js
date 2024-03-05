@@ -1,23 +1,23 @@
-import { cart } from '../data/cart.js';
+import { cart, removeFromCart } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
 let cartSummaryHTML = '';
 
-cart.forEach((cartItem) =>{
+cart.forEach((cartItem) => {
 
   const productId = cartItem.productId;
 
   let matchingProduct;
 
   products.forEach((product) => {
-    if(product.id === productId) {
+    if (product.id === productId) {
       matchingProduct = product;
     }
   });
 
   console.log(matchingProduct);
-  
+
   cartSummaryHTML += `<div class="cart-item-container">
   <div class="delivery-date">
     Delivery date: Tuesday, June 21
@@ -45,7 +45,8 @@ cart.forEach((cartItem) =>{
           Update
         </span>
         
-        <span class="delete-quantity-link link-primary">
+        <span class="delete-quantity-link link-primary
+         js-delete-link" data-product-id="${matchingProduct.id}">
           Delete
         </span>
 
@@ -101,7 +102,15 @@ cart.forEach((cartItem) =>{
 });
 
 document.querySelector('.js-order-summary')
-.innerHTML= cartSummaryHTML;
+  .innerHTML = cartSummaryHTML;
+
+document.querySelectorAll('.js-delete-link')
+  .forEach((link) => {
+    link.addEventListener('click', () => {
+      const productId = link.dataset.productId;
+      removeFromCart(productId);
+    });
+  });
 
 
 
