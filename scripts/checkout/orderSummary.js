@@ -10,16 +10,15 @@ export function renderOrderSummary() {
 
   let cartSummaryHTML = '';
 
-  cart.forEach((cartItem) => {
-
+ cart.forEach((cartItem) => {
     const productId = cartItem.productId;
 
     const matchingProduct = getProduct(productId);
     
-    const deliveryOptionId = cartItem.
-      deliveryOptionId;
+    const deliveryOptionId = cartItem.deliveryOptionId;
 
     const deliveryOption = getDeliveryOption(deliveryOptionId);
+
     const today = dayjs();
     const deliveryDate = today.add(
       deliveryOption.deliveryDays,
@@ -32,6 +31,7 @@ export function renderOrderSummary() {
 
     cartSummaryHTML += `
     <div class="cart-item-container 
+    js-cart-item-container
     js-cart-item-container-${matchingProduct.id}">
   <div class="delivery-date">
     Delivery date: ${dateString}
@@ -48,9 +48,10 @@ export function renderOrderSummary() {
       <div class="product-price">
         $${formatCurrency(matchingProduct.priceCents)}
       </div>
-      <div class="product-quantity">
+      <div class="product-quantity 
+      js-product-quantity-${matchingProduct.id}">
         <span>
-          Quantity: <span class="quantity-label">${cart.quantity}</span>
+          Quantity: <span class="quantity-label">${cartItem.quantity}</span>
         </span>
 
         <span class="update-quantity-link link-primary">
